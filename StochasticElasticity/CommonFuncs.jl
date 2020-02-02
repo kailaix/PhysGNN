@@ -4,6 +4,7 @@ using PyPlot
 using Statistics
 using LinearAlgebra
 using MAT
+using PyCall
 using JLD2
 
 mutable struct Result 
@@ -189,6 +190,11 @@ function ae_Hmat(z, config::Array{Int64} = [20,20,20,2], name::String="default")
     z = convert_to_tensor(z, dtype=Float64)
     out = ae(z, config, name)
     out = [out[:,1]+1.5 sigmoid(out[:,2])*0.5]
+    out, plane_stress_hmat(out[:,1], out[:,2])
+end
+
+function gs_Hmat(z, A::PyObject, μ::PyObject)
+    out = z*A .+ μ
     out, plane_stress_hmat(out[:,1], out[:,2])
 end
 
