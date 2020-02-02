@@ -1,0 +1,4 @@
+PlaneStressHmat
+double e(?)
+double nu(?)
+double h(?,3,3) -> output
