@@ -37,9 +37,9 @@ dic=Dict(z=>randn(16*m*n,10),
 @info run(sess, loss, feed_dict=dic)
 
 
-fixed_z = randn(50,16*m*n,10)
-fixed_Hs = zeros(50,16,m*n,3,3)
-for k = 1:50
+fixed_z = randn(100,16*m*n,10)
+fixed_Hs = zeros(100,16,m*n,3,3)
+for k = 1:100
     for i = 1:16
         fixed_Hs[k,i,:,:,:] = get_random_mat2(hmat_idx)
     end
@@ -55,10 +55,10 @@ for i = 1:15001
                         pH=>Hs)
     l, _ = run(sess, [loss, opt], feed_dict=dic)
 
-    if mod(i,100)==1
-        tl = zeros(50)
+    if mod(i,1000)==1
+        tl = zeros(100)
         res = []
-        for k = 1:50
+        for k = 1:100
             dic2=Dict(z=>fixed_z[k,:,:],
                                 pH=>fixed_Hs[k,:,:,:,:])
             eμ, tl[k] = run(sess, [Eμ,loss], feed_dict=dic2)
@@ -66,10 +66,10 @@ for i = 1:15001
         end
         res = vcat(res...)
         visualize(res[:,1], res[:,2]); savefig("nn$hmat_idx$tid/res$i.pdf")
+        save_result(res1, l)
         save_result(res1, mean(tl), std(tl))
         plot(res1)
     end
-    save_result(res1, l)
     @show i, l
 end
 
