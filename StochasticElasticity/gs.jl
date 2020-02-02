@@ -82,4 +82,4 @@ for i = 1:15001
     @show i, l
 end
 
-@save "nn$hmat_idx$tid.jld2" res1
+@save "gs$hmat_idx$tid.jld2" res1

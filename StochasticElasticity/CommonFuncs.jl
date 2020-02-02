@@ -137,6 +137,57 @@ function PyPlot.:scatter(u::Array{Float64,1}, m::Int64, n::Int64, h::Float64)
     scatter((X+U)[:], (Y+V)[:])
 end
 
+function PyPlot.:mesh(u::Array{Float64,1}, m::Int64, n::Int64, h::Float64; 
+    facecolors="blue", edgecolors::Bool = false)
+    U = zeros(n+1, m+1)
+    V = zeros(n+1, m+1)
+    X = zeros(n+1, m+1)
+    Y = zeros(n+1, m+1)
+    patches = []
+    for i = 1:m+1
+        for j = 1:n+1
+            U[j,i] = u[(j-1)*(m+1)+i] 
+            V[j,i] = u[(j-1)*(m+1)+i+(m+1)*(n+1)]
+            X[j,i] = h*(i-1)
+            Y[j,i] = h*(j-1)
+        end
+    end
+    Xt = X + U 
+    Yt = Y + V
+    for j = 1:m 
+        for i = 1:n 
+            polygon = plt.Polygon([
+                Xt[i,j] Yt[i,j]
+                Xt[i+1,j] Yt[i+1,j]
+                Xt[i+1,j+1] Yt[i+1,j+1]
+                Xt[i,j+1] Yt[i,j+1]
+            ], true)
+            push!(patches,polygon)
+        end
+    end
+    if edgecolors
+        p = matplotlib.collections.PatchCollection(patches,alpha=0.2,facecolors=facecolors,
+        edgecolors="k")
+    else
+        p = matplotlib.collections.PatchCollection(patches,alpha=0.8,facecolors=facecolors)
+    end
+    gca().add_collection(p)
+    return p 
+end
+
+function PyPlot.:mesh(u::Array{Float64,2}, m::Int64, n::Int64, h::Float64; 
+        facecolors="blue", edgecolors::Bool=false)
+    local colors_
+    if isa(facecolors, String)
+        colors_ = [facecolors for i = 1:size(u,1)]
+    else
+        colors_ = facecolors
+    end
+    for i = 1:size(u,1)
+        mesh(u[i,:], m, n, h, colors_[i], edgecolors)
+    end
+end
+
 function PyPlot.:scatter(u::Array{Float64,2}, m::Int64, n::Int64, h::Float64)
     for i = 1:size(u,1)
         scatter(u[i,:], m, n, h)
