@@ -9,6 +9,7 @@ using JLD2
 
 mutable struct Result 
     dname::String 
+    ii::Array{Int64}
     loss::Array{Float64}
     tloss::Array{Float64}
     tloss_std::Array{Float64}
@@ -17,14 +18,12 @@ end
 function Result(dname::String)
     rm(dname, recursive=true, force=true)
     mkdir(dname)
-    Result(dname, [], [], [])
+    Result(dname, [], [], [], [])
 end
 
-function save_result(res::Result, l::Float64)
-    push!(res.loss, l)
-end
 
-function save_result(res::Result, l::Float64, v::Float64)
+function save_result(res::Result, i::Int64, l::Float64, tl::Float64, v::Float64)
+    push!(res.ii, i)
     push!(res.tloss, l)
     push!(res.tloss_std, v)
 end
@@ -34,7 +33,7 @@ function PyPlot.:plot(res::Result)
         return
     end
     close("all")
-    vs = Int.(round.(LinRange(1, length(res.loss), length(res.tloss))))
+    vs = res.ii 
     plot(vs, res.loss[vs], "g", label="Training")
     plot(vs, res.tloss, "r", label="Testing")
     fill_between(vs, res.tloss-res.tloss_std, res.tloss+res.tloss_std, alpha=0.5, color="orange")

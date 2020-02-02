@@ -46,6 +46,7 @@ for k = 1:100
 end
 
 res1 = Result("nn$hmat_idx$tid")
+plots = [1, 10, 50, 100, 200, 500]
 for i = 1:15001
     Hs = zeros(16,m*n,3,3)
     for i = 1:16
@@ -55,7 +56,7 @@ for i = 1:15001
                         pH=>Hs)
     l, _ = run(sess, [loss, opt], feed_dict=dic)
 
-    if mod(i,1000)==1
+    if i in plots || mod(i,1000)==1
         tl = zeros(100)
         res = []
         for k = 1:100
@@ -66,8 +67,7 @@ for i = 1:15001
         end
         res = vcat(res...)
         visualize(res[:,1], res[:,2]); savefig("nn$hmat_idx$tid/res$i.pdf")
-        save_result(res1, l)
-        save_result(res1, mean(tl), std(tl))
+        save_result(res1, i, l, mean(tl), std(tl))
         plot(res1)
     end
     @show i, l
