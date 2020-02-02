@@ -45,7 +45,7 @@ for k = 1:50
     end
 end
 
-res1 = Result("nn$hmat_idx$idx")
+res1 = Result("nn$hmat_idx$tid")
 for i = 1:15001
     Hs = zeros(16,m*n,3,3)
     for i = 1:16
