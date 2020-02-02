@@ -24,7 +24,8 @@ end
 
 function save_result(res::Result, i::Int64, l::Float64, tl::Float64, v::Float64)
     push!(res.ii, i)
-    push!(res.tloss, l)
+    push!(res.loss, l)
+    push!(res.tloss, tl)
     push!(res.tloss_std, v)
 end
 
@@ -34,7 +35,7 @@ function PyPlot.:plot(res::Result)
     end
     close("all")
     vs = res.ii 
-    plot(vs, res.loss[vs], "g", label="Training")
+    plot(vs, res.loss, "g", label="Training")
     plot(vs, res.tloss, "r", label="Testing")
     fill_between(vs, res.tloss-res.tloss_std, res.tloss+res.tloss_std, alpha=0.5, color="orange")
     xlabel("Iterations")
@@ -177,8 +178,13 @@ function get_random_mat2(idx=1)
             u = 0.2*randn()
             H[i,:,:] = get_H_mat(u+ 1.5, 0.4)
         elseif idx==3
-            u = rand() + 1.0
-            v = (u-1.0)*0.35 + 0.1
+            if rand()<0.5
+                u = rand() + 1.0
+                v = 0.4 + rand()*0.05
+            else 
+                v = rand()*0.5
+                u = 1.2 + rand()*0.1
+            end
             H[i,:,:] = get_H_mat(u, v) 
         end
     end
