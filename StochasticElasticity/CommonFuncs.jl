@@ -176,16 +176,12 @@ function get_random_mat2(idx=1)
             H[i,:,:] = get_H_mat(u+ 1.0, v*0.5)
         elseif idx==2
             u = 0.2*randn()
-            H[i,:,:] = get_H_mat(u+ 1.5, 0.4)
+            H[i,:,:] = get_H_mat(u+ 1.5, 0.4+randn()*0.02)
         elseif idx==3
-            if rand()<0.5
-                u = rand() + 1.0
-                v = 0.4 + rand()*0.05
-            else 
-                v = rand()*0.5
-                u = 1.2 + rand()*0.1
-            end
-            H[i,:,:] = get_H_mat(u, v) 
+            A = [0.2 0.05
+            0.05 0.15]
+            u, v = A*randn(2)
+            H[i,:,:] = get_H_mat(u+1.75, v+0.2) 
         end
     end
     H 

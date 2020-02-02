@@ -15,7 +15,9 @@ n = 2
 h = 0.1
 idx = rand(1:(m+1)*(n+1), 10)
 idx = [idx; idx.+(m+1)*(n+1)]
-A = Variable(zeros(2,2))
+# A = Variable([0.2 0.0;0.0 0.1])
+# μ = Variable([1.75;0.2])
+A = Variable([0.25 0.0;0.0 0.25])
 μ = Variable([1.5;0.25])
 z = placeholder(Float64, shape=[16*m*n,2])
 Eμ, H = gs_Hmat(z, A, μ)
@@ -26,6 +28,10 @@ uexact = get_disps(pH, m, n, h)
 
 # gradients(sum(u), H)
 loss = empirical_sinkhorn(u, uexact, dist=(x,y)->dist(x, y, 1), method="lp")
+
+# momentum matching
+# loss = sum((mean(u, dims=1) - mean(uexact, dims=1))^2) + sum((std(u, dims=1) - std(uexact, dims=1))^2)
+
 
 opt = AdamOptimizer(0.0002,beta1=0.5).minimize(loss)
 sess = Session(); init(sess)
@@ -67,6 +73,7 @@ for i = 1:15001
             eμ, tl[k] = run(sess, [Eμ,loss], feed_dict=dic2)
             push!(res, eμ)
         end
+        @info run(sess, [A, μ])
         res = vcat(res...)
         visualize(res[:,1], res[:,2]); savefig("gs$hmat_idx$tid/res$i.pdf", rasterized=true)
         save_result(res1, i, l, mean(tl), std(tl))
