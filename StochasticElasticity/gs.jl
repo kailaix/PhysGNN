@@ -53,7 +53,7 @@ end
 
 res1 = Result("gs$hmat_idx$tid")
 plots = [1, 11, 51, 101]
-for i = 1:3001
+for i = 1:10001
     Hs = zeros(batch_size,m*n,3,3)
     for i = 1:batch_size
         Hs[i,:,:,:] = get_random_mat2(hmat_idx)

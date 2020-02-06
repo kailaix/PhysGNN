@@ -6,7 +6,7 @@ tloss = []
 loss = []
 for i = 0:9
     @info i 
-    @load "nn$hmat_idx$i.jld2" res1 
+    @load "nn$hmat_idx$(i)_$batch_size.jld2" res1 
     push!(tloss, res1.tloss)
     push!(loss, res1.loss)
     global vs = res1.ii
@@ -32,7 +32,7 @@ tloss = []
 loss = []
 for i = 0:9
     @info i 
-    @load "gs$hmat_idx$i.jld2" res1 
+    @load "gs$hmat_idx$(i)_$batch_size.jld2" res1 
     push!(tloss, res1.tloss)
     push!(loss, res1.loss)
     global vs = res1.ii
