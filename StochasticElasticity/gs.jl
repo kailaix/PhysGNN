@@ -15,7 +15,7 @@ h = 0.1
 batch_size = 64
 # A = Variable([0.2 0.0;0.0 0.1])
 # μ = Variable([1.75;0.2])
-A = Variable([0.25 0.0;0.0 0.25])
+A = Variable([0.1 0.0;0.0 0.1])
 μ = Variable([1.5;0.25])
 z = placeholder(Float64, shape=[batch_size*m*n,2])
 Eμ, H = gs_Hmat(z, A, μ)
@@ -53,7 +53,7 @@ end
 
 res1 = Result("gs$hmat_idx$tid")
 plots = [1, 11, 51, 101]
-for i = 1:10001
+for i = 1:3001
     Hs = zeros(batch_size,m*n,3,3)
     for i = 1:batch_size
         Hs[i,:,:,:] = get_random_mat2(hmat_idx)

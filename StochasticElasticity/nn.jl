@@ -52,7 +52,7 @@ end
 
 res1 = Result("nn$hmat_idx$(tid)_$latent_dim")
 plots = [1, 11, 51, 101]
-for i = 1:10001
+for i = 1:3001
     Hs = zeros(batch_size,m*n,3,3)
     for i = 1:batch_size
         Hs[i,:,:,:] = get_random_mat2(hmat_idx)
