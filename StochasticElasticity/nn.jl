@@ -11,7 +11,7 @@ if length(ARGS)==2
     global latent_dim = parse(Int64, ARGS[3])
 end
 
-@info hmat_idx, tid 
+@info hmat_idx, tid, latent_dim
 reset_default_graph()
 m = 4
 n = 2
