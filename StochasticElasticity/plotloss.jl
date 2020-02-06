@@ -1,6 +1,6 @@
 include("CommonFuncs.jl")
 
-hmat_idx = 1
+for hmat_idx in [1,2,3]
 
 tloss = []
 loss = []
@@ -54,12 +54,17 @@ end
 
 
 close("all")
-semilogy(vs, nn_tloss_, "r")
-fill_between(vs, nn_tloss_ - nn_tloss_v, nn_tloss_+nn_tloss_v, alpha=0.5, color="red")
+semilogy(vs, nn_tloss_, "r", label="PhysGNN")
+fill_between(vs, nn_tloss_ - nn_tloss_v, nn_tloss_+nn_tloss_v, alpha=0.3, color="red")
 
-semilogy(vs, gs_tloss_, "g")
-fill_between(vs, gs_tloss_ - gs_tloss_v, gs_tloss_+gs_tloss_v, alpha=0.5, color="green")
+semilogy(vs, gs_tloss_, "g", label="Gaussian")
+fill_between(vs, gs_tloss_ - gs_tloss_v, gs_tloss_+gs_tloss_v, alpha=0.3, color="green")
 
+grid(true, which="both")
+legend(prop=Dict("size"=> 24))
+xlabel("Iterations", fontsize=20)
+ylabel("Loss", fontsize=20)
 # semilogy(vs, loss_, "--", color="orange")
 # fill_between(vs, loss_ - loss_v, loss_+loss_v, alpha=0.5, color="orange")
-savefig("test.png")
+savefig("elasticity_loss$hmat_idx.pdf")
+end

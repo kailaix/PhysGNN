@@ -2,3 +2,6 @@
 *.png
 *.pdf
 *.jld2
+*.mat
+*.DS_Store
+*loss.txt

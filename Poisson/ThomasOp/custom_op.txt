@@ -1,0 +1,6 @@
+SolveTridiagonal
+double a(?)
+double b(?)
+double c(?)
+double f(?)
+double d(?) -> output

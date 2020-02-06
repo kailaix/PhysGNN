@@ -13,16 +13,15 @@ reset_default_graph()
 m = 4
 n = 2
 h = 0.1
-idx = rand(1:(m+1)*(n+1), 10)
-idx = [idx; idx.+(m+1)*(n+1)]
+batch_size = 64
 # A = Variable([0.2 0.0;0.0 0.1])
 # μ = Variable([1.75;0.2])
 A = Variable([0.25 0.0;0.0 0.25])
 μ = Variable([1.5;0.25])
-z = placeholder(Float64, shape=[16*m*n,2])
+z = placeholder(Float64, shape=[batch_size*m*n,2])
 Eμ, H = gs_Hmat(z, A, μ)
-pH = placeholder(Float64, shape=[16, m*n, 3, 3])
-H = tf.reshape(H, (16, m*n, 3, 3))
+pH = placeholder(Float64, shape=[batch_size, m*n, 3, 3])
+H = tf.reshape(H, (batch_size, m*n, 3, 3))
 u = get_disps(H, m, n, h)
 uexact = get_disps(pH, m, n, h)
 
@@ -36,19 +35,19 @@ loss = empirical_sinkhorn(u, uexact, dist=(x,y)->dist(x, y, 1), method="lp")
 opt = AdamOptimizer(0.0002,beta1=0.5).minimize(loss)
 sess = Session(); init(sess)
 
-Hs = zeros(16,m*n,3,3)
-for i = 1:16
+Hs = zeros(batch_size,m*n,3,3)
+for i = 1:batch_size
     Hs[i,:,:,:] = get_random_mat2(hmat_idx)
 end
-dic=Dict(z=>randn(16*m*n,2),
+dic=Dict(z=>randn(batch_size*m*n,2),
                     pH=>Hs)
 @info run(sess, loss, feed_dict=dic)
 
 
-fixed_z = randn(100,16*m*n,2)
-fixed_Hs = zeros(100,16,m*n,3,3)
+fixed_z = randn(100,batch_size*m*n,2)
+fixed_Hs = zeros(100,batch_size,m*n,3,3)
 for k = 1:100
-    for i = 1:16
+    for i = 1:batch_size
         fixed_Hs[k,i,:,:,:] = get_random_mat2(hmat_idx)
     end
 end
@@ -56,11 +55,11 @@ end
 res1 = Result("gs$hmat_idx$tid")
 plots = [1, 10, 50, 100, 200, 500]
 for i = 1:15001
-    Hs = zeros(16,m*n,3,3)
-    for i = 1:16
+    Hs = zeros(batch_size,m*n,3,3)
+    for i = 1:batch_size
         Hs[i,:,:,:] = get_random_mat2(hmat_idx)
     end
-    dic=Dict(z=>randn(16*m*n,2),
+    dic=Dict(z=>randn(batch_size*m*n,2),
                         pH=>Hs)
     l, _ = run(sess, [loss, opt], feed_dict=dic)
 

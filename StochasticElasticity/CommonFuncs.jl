@@ -121,7 +121,7 @@ function get_disps(H, m, n, h; tscale = 0.3)
     u = map(H->get_disp(H, m, n, h; tscale = tscale), H)
 end
 
-function PyPlot.:scatter(u::Array{Float64,1}, m::Int64, n::Int64, h::Float64)
+function PyPlot.:scatter(u::Array{Float64,1}, m::Int64, n::Int64, h::Float64;kwargs...)
     U = zeros(n+1, m+1)
     V = zeros(n+1, m+1)
     X = zeros(n+1, m+1)
@@ -134,7 +134,7 @@ function PyPlot.:scatter(u::Array{Float64,1}, m::Int64, n::Int64, h::Float64)
             Y[j,i] = h*(j-1)
         end
     end
-    scatter((X+U)[:], (Y+V)[:])
+    scatter((X+U)[:], (Y+V)[:];kwargs...)
 end
 
 function PyPlot.:mesh(u::Array{Float64,1}, m::Int64, n::Int64, h::Float64; 
@@ -218,21 +218,25 @@ function get_random_mat2(idx=1)
         # 
         if idx==1
             if rand()>0.5
-                u = (rand()-0.5)*0.25 + 0.25
-                v = (rand()-0.5)*0.25 + 0.25 
+                u = 0.05*randn()+0.75
+                v = 0.05*randn()+0.75
             else
-                u = (rand()-0.5)*0.25 + 0.75
-                v = (rand()-0.5)*0.25 + 0.75
+                u = 0.05*randn()+0.25
+                v = 0.05*randn()+0.25
             end
-            H[i,:,:] = get_H_mat(u+ 1.0, v*0.5)
+            H[i,:,:] = get_H_mat(u + 1.0, v*0.5)
         elseif idx==2
             u = 0.2*randn()
             H[i,:,:] = get_H_mat(u+ 1.5, 0.4+randn()*0.02)
         elseif idx==3
-            A = [0.2 0.05
-            0.05 0.15]
-            u, v = A*randn(2)
-            H[i,:,:] = get_H_mat(u+1.75, v+0.2) 
+
+            u,v = randn(2)
+            H[i,:,:] = get_H_mat(u*0.05 + 1.7, v*0.05 + 0.3)
+
+            # v = rand()
+            # u = rand()
+            # H[i,:,:] = get_H_mat(u + 1.0, (v-0.5)*0.05 + 0.25)
+
         end
     end
     H 
