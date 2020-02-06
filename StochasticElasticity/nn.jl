@@ -50,7 +50,7 @@ for k = 1:100
     end
 end
 
-res1 = Result("nn$hmat_idx$tid")
+res1 = Result("nn$hmat_idx$(tid)_$latent_dim")
 plots = [1, 11, 51, 101]
 for i = 1:10001
     Hs = zeros(batch_size,m*n,3,3)
@@ -71,11 +71,11 @@ for i = 1:10001
             push!(res, eμ)
         end
         res = vcat(res...)
-        visualize(res[:,1], res[:,2]); savefig("nn$hmat_idx$tid/res$i.pdf",rasterized=true)
+        visualize(res[:,1], res[:,2]); savefig("nn$hmat_idx$(tid)_$latent_dim/res$i.pdf",rasterized=true)
         save_result(res1, i, l, mean(tl), std(tl))
         plot(res1)
     end
     @show i, l
 end
 
-@save "nn$hmat_idx$tid.jld2" res1
+@save "nn$hmat_idx$(tid)_$latent_dim.jld2" res1
