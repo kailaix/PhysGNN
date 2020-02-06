@@ -5,7 +5,7 @@ hmat_idx = 1
 tid = 1
 latent_dim = 20
 
-if length(ARGS)==2
+if length(ARGS)==3
     global hmat_idx = parse(Int64, ARGS[1])
     global tid = parse(Int64, ARGS[2])
     global latent_dim = parse(Int64, ARGS[3])
