@@ -4,9 +4,8 @@ using Random; Random.seed!(233)
 hmat_idx = 3
 tid = 0
 
-if length(ARGS)==2
+if length(ARGS)==1
     global hmat_idx = parse(Int64, ARGS[1])
-    global tid = parse(Int64, ARGS[2])
 end
 @info hmat_idx, tid 
 reset_default_graph()
@@ -53,8 +52,8 @@ for k = 1:100
 end
 
 res1 = Result("gs$hmat_idx$tid")
-plots = [1, 10, 50, 100, 200, 500]
-for i = 1:15001
+plots = [1, 11, 51, 101]
+for i = 1:10001
     Hs = zeros(batch_size,m*n,3,3)
     for i = 1:batch_size
         Hs[i,:,:,:] = get_random_mat2(hmat_idx)
@@ -63,7 +62,7 @@ for i = 1:15001
                         pH=>Hs)
     l, _ = run(sess, [loss, opt], feed_dict=dic)
 
-    if i in plots || mod(i,1000)==1
+    if i in plots || mod(i,500)==1
         tl = zeros(100)
         res = []
         for k = 1:100
