@@ -3,10 +3,12 @@ using Random; Random.seed!(233)
 
 hmat_idx = 1
 tid = 1
+latent_dim = 20
 
 if length(ARGS)==2
     global hmat_idx = parse(Int64, ARGS[1])
     global tid = parse(Int64, ARGS[2])
+    global latent_dim = parse(Int64, ARGS[3])
 end
 
 @info hmat_idx, tid 
@@ -15,8 +17,6 @@ m = 4
 n = 2
 h = 0.1
 batch_size = 64
-latent_dim = 10
-# latent_dim = 20
 
 z = placeholder(Float64, shape=[batch_size*m*n,latent_dim])
 Eμ, H = ae_Hmat(z, [20,20,20,20,2])
@@ -51,8 +51,8 @@ for k = 1:100
 end
 
 res1 = Result("nn$hmat_idx$tid")
-plots = [1, 11, 51, 101, 501, 1001, 1501, 2001]
-for i = 1:2001
+plots = [1, 11, 51, 101]
+for i = 1:10001
     Hs = zeros(batch_size,m*n,3,3)
     for i = 1:batch_size
         Hs[i,:,:,:] = get_random_mat2(hmat_idx)
@@ -61,7 +61,7 @@ for i = 1:2001
                         pH=>Hs)
     l, _ = run(sess, [loss, opt], feed_dict=dic)
 
-    if i in plots || mod(i,1000)==1
+    if i in plots || mod(i,500)==1
         tl = zeros(100)
         res = []
         for k = 1:100
@@ -71,7 +71,7 @@ for i = 1:2001
             push!(res, eμ)
         end
         res = vcat(res...)
-        visualize(res[:,1], res[:,2]); savefig("nn$hmat_idx$tid/res$i.png",rasterized=true)
+        visualize(res[:,1], res[:,2]); savefig("nn$hmat_idx$tid/res$i.pdf",rasterized=true)
         save_result(res1, i, l, mean(tl), std(tl))
         plot(res1)
     end

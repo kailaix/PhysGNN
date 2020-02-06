@@ -6,12 +6,11 @@ using Random
 using DelimitedFiles
 using Distributions
 Random.seed!(233)
-matplotlib.use("agg")
 
 solve_tridiagonal = load_op_and_grad("../ThomasOp/build/libSolveTridiagonal", "solve_tridiagonal")
 
 # generating samples from Dirichlet distribution
-dist_id = 1
+dist_id = 2
 if length(ARGS)>0
 dist_id = parse(Int64, ARGS[1])
 end

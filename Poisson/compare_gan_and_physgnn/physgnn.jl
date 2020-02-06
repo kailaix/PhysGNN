@@ -7,8 +7,12 @@ X_dim = 100
 z_dim = 10
 h_dim = 128
 
+# function sample_z(m, n)
+#     return randn(m, n)
+# end
+
 function sample_z(m, n)
-    return randn(m, n)
+    return (rand(m,n) .- 0.5)*2
 end
 
 function generator(z)
@@ -51,11 +55,16 @@ for it=1:1000000
     #     end
     # end
 
-    X_mb = PDESample(mb_size)
-    l,_ = run(sess, [loss, opt], 
-        feed_dict=Dict(true_sample=>X_mb, z=>sample_z(mb_size, z_dim)))
+    
     # tloss = run(sess, loss,  feed_dict=Dict(true_sample=>PDESample(32), z=>sample_z(32, z_dim)))
     if length(_loss)==0 || mod(it, 200)==0
+        samples = run(sess, G_out, feed_dict=Dict( z=>sample_z(10000, z_dim)))
+        writedlm("nnmclogs$(dist_id)/$it.txt", samples)
+        close("all")
+        hist2D(samples[:,1],abs.(samples[:,2]), normed=true, bins=50, range=((0.0,1.0),(0.0,1.0)), vmin=0.0, vmax=vmax)
+        colorbar()
+        savefig("nnmclogs$(dist_id)/$(it)_sample.png")
+        
         L = 0
         for j = 1:10
             l_ = run(sess, loss,
@@ -64,12 +73,7 @@ for it=1:1000000
         end
         global tloss = L/10
         push!(_tloss, tloss)
-        samples = run(sess, G_out, feed_dict=Dict( z=>sample_z(10000, z_dim)))
-        writedlm("nnmclogs$(dist_id)/$it.txt", samples)
-        close("all")
-        hist2D(samples[:,1],abs.(samples[:,2]), normed=true, bins=50, range=((0.0,1.0),(0.0,1.0)), vmin=0.0, vmax=vmax)
-        colorbar()
-        savefig("nnmclogs$(dist_id)/$(it)_sample.png")
+        
         if it>1
             close("all")
             plot(_loss, label="Train")
@@ -84,6 +88,9 @@ for it=1:1000000
             writedlm("nnmclogs$(dist_id)/tloss.txt", _tloss)
         end
     end
+    X_mb = PDESample(mb_size)
+    l,_ = run(sess, [loss, opt], 
+        feed_dict=Dict(true_sample=>X_mb, z=>sample_z(mb_size, z_dim)))
     push!(_loss, l)
     # push!(_tloss, l)
     @show it, l, tloss
