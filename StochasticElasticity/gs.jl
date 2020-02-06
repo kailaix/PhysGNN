@@ -2,7 +2,7 @@ include("CommonFuncs.jl")
 using Random; Random.seed!(233)
 
 hmat_idx = 3
-tid = 0
+batch_size = 64
 
 if length(ARGS)==1
     global hmat_idx = parse(Int64, ARGS[1])
@@ -12,7 +12,6 @@ reset_default_graph()
 m = 4
 n = 2
 h = 0.1
-batch_size = 64
 # A = Variable([0.2 0.0;0.0 0.1])
 # μ = Variable([1.75;0.2])
 A = Variable([0.1 0.0;0.0 0.1])
