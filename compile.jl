@@ -1,4 +1,9 @@
+using Pkg
+Pkg.add(["Conda","MAT","ADCME","JLD2","Revise","Distributions",
+        "DelimitedFiles","LinearAlgebra","Statistics","PyCall"])
+
 using ADCME
+
 function compile(DIR)
     PWD = pwd()
     cd(DIR)
