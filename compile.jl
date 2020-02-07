@@ -1,5 +1,5 @@
 using Pkg
-Pkg.add(["Conda","MAT","ADCME","JLD2","Revise","Distributions",
+Pkg.add(["ADCME","Conda","MAT","JLD2","Revise","Distributions",
         "DelimitedFiles","LinearAlgebra","Statistics","PyCall"])
 using Conda,MAT,ADCME,JLD2,Revise,Distributions,DelimitedFiles,LinearAlgebra,Statistics,PyCall
 

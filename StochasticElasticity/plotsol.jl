@@ -107,6 +107,8 @@ function genrand(idx)
     elseif idx==3
         u,v = randn(2)
         u*0.05 + 1.7, v*0.05 + 0.3
+    elseif idx==4
+        
     end
 end
 

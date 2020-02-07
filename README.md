@@ -2,20 +2,12 @@
 
 ## Instruction 
 
-Run the following command in **current directory** to activate the environment and install necessary packages. 
-```julia
-using Pkg
-Pkg.activate(".")
-Pkg.instantiate()
-```
 
-If it is the first time you use this code, compile binary dependencies using 
+Run the following command in **current directory** 
 ```julia
 include("compile.jl")
 ```
+⚠️ If it is the first time you run the command above, it might take you some time for downloading and installing dependencies. 
 
-To run a script in command line, make sure you include the project flag
-```bash
-julia --project="<path to PhysGNN>" <script file name>
-```
+Now you can run any script in this repository. 
 
