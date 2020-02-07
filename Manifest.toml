@@ -2,7 +2,9 @@
 
 [[ADCME]]
 deps = ["Conda", "FFTW", "LinearAlgebra", "MAT", "Optim", "Pkg", "PyCall", "Random", "SparseArrays", "SpecialFunctions", "Statistics"]
-git-tree-sha1 = "f97a303249eef13fdb3a6f24269982a4e95d8a65"
+git-tree-sha1 = "f0fbffc1af493a1684a1fec787964e52a01a6a4f"
+repo-rev = "master"
+repo-url = "https://github.com/kailaix/ADCME.jl"
 uuid = "07b341a0-ce75-57c6-b2de-414ffdc00be5"
 version = "0.4.1"
 
