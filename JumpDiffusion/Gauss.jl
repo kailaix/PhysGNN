@@ -79,6 +79,7 @@ w_ = placeholder(Float64, shape=[batch_size, 2])
 
 # m = MyDist3()
 !isdir("figure$(model_id)_$(n_layer)_$(hidden_size)") && mkdir("figure$(model_id)_$(n_layer)_$(hidden_size)")
+!isdir("figure$(model_id)_$(n_layer)_$(hidden_size)/pdf") && mkdir("figure$(model_id)_$(n_layer)_$(hidden_size)/pdf")
 
 M = rand(m, 50000)
 close("all")
