@@ -14,7 +14,6 @@ function compile(DIR)
     cd(PWD)
 end
 
-
 compile("$(@__DIR__)/StochasticElasticity/DirichletBD")
 compile("$(@__DIR__)/StochasticElasticity/PlaneStressHmat")
 compile("$(@__DIR__)/StochasticElasticity/SpatialFemStiffness")
