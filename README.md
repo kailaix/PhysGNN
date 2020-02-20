@@ -34,8 +34,9 @@ include("SHGAN10000.jl") # Sinkhorn GAN with the penalty parameter = 10000.0
 
 ### Neural Network Architectures
 
-```julia
-cd("")
+```bash
+cd PhysGNN/JumpDiffusion
+sh Gauss.sh 
 ```
 
 ### Poisson's Equation
@@ -62,4 +63,6 @@ cd("JumpDiffusion")
 include("jump2d.jl") # generate data 
 include("learn2d.jl") # training PhysGNN
 ```
+
+(bash)
 
