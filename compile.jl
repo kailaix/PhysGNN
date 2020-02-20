@@ -1,7 +1,7 @@
 using Pkg
 Pkg.add(["ADCME","Conda","MAT","JLD2","Revise","Distributions",
-        "DelimitedFiles","LinearAlgebra","Statistics","PyCall"])
-using Conda,MAT,ADCME,JLD2,Revise,Distributions,DelimitedFiles,LinearAlgebra,Statistics,PyCall
+        "DelimitedFiles","LinearAlgebra","Statistics","PyCall", "RollingFunctions"])
+using Conda,MAT,ADCME,JLD2,Revise,Distributions,DelimitedFiles,LinearAlgebra,Statistics,PyCall, RollingFunctions
 
 function compile(DIR)
     PWD = pwd()

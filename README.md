@@ -58,11 +58,12 @@ include("gs.jl") # Gaussian
 
 ### Jump Diffusion
 
-```julia
+(bash)
+
+```bash
 cd("JumpDiffusion")
-include("jump2d.jl") # generate data 
-include("learn2d.jl") # training PhysGNN
+sh Jump.sh 
 ```
 
-(bash)
+
 
