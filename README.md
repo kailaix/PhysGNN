@@ -28,8 +28,38 @@ include("SHGAN1.jl") # Sinkhorn GAN with the penalty parameter = 1.0
 include("SHGAN10.jl") # Sinkhorn GAN with the penalty parameter = 10.0
 include("SHGAN100.jl") # Sinkhorn GAN with the penalty parameter = 100.0
 include("SHGAN10000.jl") # Sinkhorn GAN with the penalty parameter = 10000.0
-
 ```
 
 
+
+### Neural Network Architectures
+
+```julia
+cd("")
+```
+
+### Poisson's Equation
+
+```julia
+cd("Poisson/compare_gan_and_physgnn")
+include("gan.jl") # adversarial training
+include("physgnn.jl") # PhysGNN
+```
+
+### LinearElasticity
+
+```julia
+cd("StochasticElasticity")
+include("nn.jl") # PhysGNN
+tid = 1 # random
+include("gs.jl") # Gaussian 
+```
+
+### Jump Diffusion
+
+```julia
+cd("JumpDiffusion")
+include("jump2d.jl") # generate data 
+include("learn2d.jl") # training PhysGNN
+```
 
