@@ -3,6 +3,7 @@ Pkg.add(["ADCME","Conda","MAT","JLD2","Revise","Distributions",
         "DelimitedFiles","LinearAlgebra","Statistics","PyCall", "RollingFunctions"])
 using Conda,MAT,ADCME,JLD2,Revise,Distributions,DelimitedFiles,LinearAlgebra,Statistics,PyCall, RollingFunctions
 
+Conda.add("scikit-learn")
 function compile(DIR)
     PWD = pwd()
     cd(DIR)
