@@ -5,6 +5,7 @@ using PyCall
 using PyPlot
 using DelimitedFiles
 
+!isdir("figuresPhysGNN") && mkdir("figuresPhysGNN")
 tt = pyimport("tensorflow.examples.tutorials.mnist")
 
 function lrelu(x, th=0.2)
@@ -147,7 +148,7 @@ loss_g = []
 for epoch = 1:train_epoch
     for iter = 1:div(num_examples, batch_size)
         if iter%50==1
-            show_result("figuresLP/$(epoch)_$(iter)")
+            show_result("figuresPhysGNN/$(epoch)_$(iter)")
         end
 
         x_ = train_set[(iter-1)*batch_size+1:iter*batch_size,:,:,:]

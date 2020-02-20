@@ -6,6 +6,8 @@ using PyCall
 using PyPlot
 using DelimitedFiles
 
+!isdir("figuresDC") && mkdir("figuresDC")
+
 tt = pyimport("tensorflow.examples.tutorials.mnist")
 
 function lrelu(x, th=0.2)
@@ -171,7 +173,7 @@ plot(loss_d, label="Discriminator")
 plot(loss_g, label="Generator")
 xlabel("Iterations")
 ylabel("Loss")
-savefig("figures/loss.png")
+savefig("figuresDC/loss.png")
 
-writedlm("figures/lossd.txt", loss_d)
-writedlm("figures/lossg.txt", loss_g)
+writedlm("figuresDC/lossd.txt", loss_d)
+writedlm("figuresDC/lossg.txt", loss_g)
