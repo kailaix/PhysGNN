@@ -8,3 +8,4 @@ julia Gauss.jl $hidden_size $n_layer $model_id &
 done
 done
 done
+wait
